@@ -2,6 +2,8 @@ Lets start with simple brute force solution,
 
 We will simply traverse the array and in each window we will find the maximum and push it into a vector and return the vector.
 
+```
+
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         int i=0,j=k-1;
         vector<int>v;
@@ -17,10 +19,10 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         }
         return v; 
     }
-
+```
 This approach is extremely simple and easy to understand but the problem is the time complexity of this approach is O(N^2).
 To reduce the time complexity we will use sliding window approach and also we need a data structure in which insertion and deletion is possible from both ends, so either we can use a double ended queue (DEQUE) or a doubly linkedlist based data structure (LIST available in c++ stl).
-
+```
 vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         
         int i=0,j=0;
@@ -55,4 +57,5 @@ vector<int> maxSlidingWindow(vector<int>& nums, int k) {
         }
         return v;
     }
+    ```
 Time complexity of this approach -O(N)
