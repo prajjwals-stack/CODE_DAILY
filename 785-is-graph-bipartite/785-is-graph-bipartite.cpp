@@ -1,20 +1,17 @@
 class Solution {
 public:
-    bool isColoredAlt(int V,vector<vector<int>>& graph,vector<int>& colored,int inode){
-        queue<int>q;
-        q.push(inode);
-        colored[inode]=1;
-        while(q.empty()==false){
-            int node=q.front();
-            q.pop();
-            for(auto it: graph[node]){
-                if(colored[it]==-1){
-                    q.push(it);
-                    colored[it]=1-colored[node];
-                }
-                else if(colored[it]==colored[node]){
+    bool isColoredAltdfs(int V,vector<vector<int>>& graph,vector<int>& colored,int inode){
+        if(colored[inode]==-1)colored[inode]=1;
+        for(auto it: graph[inode]){
+            if(colored[it]==-1){
+                colored[it]=1-colored[inode];
+                if(isColoredAltdfs(V,graph,colored,it)==false){
                     return false;
                 }
+                
+            }
+            else if(colored[it]==colored[inode]){
+                return false;
             }
         }
         return true;
@@ -24,7 +21,7 @@ public:
         vector<int>colored(V+1,-1);
         for(int i=0;i<V;i++){
             if(colored[i]==-1){
-                if(isColoredAlt(V,graph,colored,i)==false){
+                if(isColoredAltdfs(V,graph,colored,i)==false){
                     return false;
                 }
             }
