@@ -1,10 +1,14 @@
 class Solution {
 public:
-    void reverseString(vector<char>& s) {
-        int p=0,q=s.size()-1;
-        while(p<=q){
-            swap(s[p++],s[q--]);
+    void reverseS(vector<char>& s,int i){
+        if(i>=s.size()/2){
+            return ;
         }
-        
+        swap(s[i],s[s.size()-i-1]);
+        reverseS(s,i+1);
+    }
+    void reverseString(vector<char>& s) {
+        int i=0;
+        reverseS(s,i);
     }
 };
