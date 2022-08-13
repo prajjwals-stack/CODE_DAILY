@@ -1,29 +1,26 @@
 class Solution {
 public:
-    void permutation(vector<int>& nums,vector<int>& sub,vector<vector<int>>&ans,vector<int>& vis){
-        if(sub.size()==nums.size()){
-            ans.push_back(sub);
+    vector<vector<int>>res;
+    void recur(vector<int>& nums,vector<int>& ans,vector<int>& map){
+        if(ans.size()==nums.size()){
+            res.push_back(ans);
             return;
         }
-        for(int i =0;i<nums.size();i++){
-            if(vis[i]==0){
-                sub.push_back(nums[i]);
-                vis[i]=1;
-                permutation(nums,sub,ans,vis);
-                sub.pop_back();
-                vis[i]=0;
-                
-            }
+        for(int i=0;i<nums.size();i++){
+            if(map[i]==0){
+            ans.push_back(nums[i]);
+            map[i]=1;
+            recur(nums,ans,map);
+            ans.pop_back();
+            map[i]=0;
+        }
         }
     }
-    
     vector<vector<int>> permute(vector<int>& nums) {
-        vector<vector<int>>ans;
-        vector<int>sub;
-        vector<int>vis(nums.size(),0);
+        vector<int>ans;
+        vector<int>map(nums.size(),0);
         
-        
-        permutation(nums,sub,ans,vis);
-        return ans;
+        recur(nums,ans,map);
+        return res;
     }
 };
