@@ -11,20 +11,19 @@
  */
 class Solution {
 public:
-    bool help(TreeNode* root,int targetSum,int sum){
-        if(root==NULL){
-            return false;
-        }
-        sum+=root->val;
-        if(root->left==NULL && root->right==NULL){
-            return targetSum==sum?true:false;
-        }
-        return help(root->left,targetSum,sum) || help(root->right,targetSum,sum);
-    }
-    
-    
-    bool hasPathSum(TreeNode* root, int targetSum) {
+    bool flag=false;
+    void pathsum(TreeNode* root,int target,int sum){
+        if(root==NULL)return;
         
-        return help(root,targetSum,0);
+        sum+=root->val;
+        if(sum==target && root->left==NULL && root->right==NULL)flag=true;
+        pathsum(root->left,target,sum);
+        pathsum(root->right,target,sum);
+        
+    }
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        int sum=0; 
+        pathsum(root,targetSum,sum);
+        return flag;
     }
 };
