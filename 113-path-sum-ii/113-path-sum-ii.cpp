@@ -12,22 +12,24 @@
 class Solution {
 public:
     vector<vector<int>>ans;
-    void path(TreeNode* root,int targetSum,vector<int>v,int sum){
+    void helper(TreeNode* root,int target,int sum,vector<int>&v){
         if(root==NULL)return;
         
         sum+=root->val;
         v.push_back(root->val);
-        if(root->left==NULL && root->right==NULL && sum==targetSum ){
-            ans.push_back(v);
+        if(root->left==NULL && root->right==NULL){
+            if(sum==target){
+                ans.push_back(v);
+            }
         }
-        path(root->left,targetSum,v,sum);
-        path(root->right,targetSum,v,sum);
-        
+        helper(root->left,target,sum,v);
+        helper(root->right,target,sum,v);
+        v.pop_back();
     }
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
+        if(root==NULL)return {};
         vector<int>v;
-        int sum=0;
-        path(root,targetSum,v,sum);
+        helper(root,targetSum,0,v);
         return ans;
     }
 };
