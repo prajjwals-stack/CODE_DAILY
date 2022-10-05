@@ -43,28 +43,31 @@ public:
 //             }
 //             return dp[nums.size()-1][target];
                int n = nums.size();
-        vector<vector<bool>> dp(n+1, vector<bool>(sum/2+1, false));
-        
-        for(int itr=0;itr<n;itr++){
-            dp[itr][0] = true;
-        }
-        
-        for(int index=1;index<n;index++){
-            for(int target=1;target<=sum/2;target++){
-                //if index is not selected
-                bool notTake = dp[index-1][target];
-        
-                //if the index is selected
-                bool take = false;
-                if(target>=nums[index]){
-                    take = dp[index-1][target-nums[index]];
+                // vector<vector<bool>> dp(n+1, vector<bool>(sum/2+1, false));
+                vector<bool>prev(sum/2+1,false);
+                vector<bool>curr(sum/2+1,false);
+                if(nums[0]<=sum/2){
+                    prev[nums[0]]=true;
                 }
-            
-                dp[index][target] = take || notTake;
-            }
-        }
-        
-        return dp[n-1][sum/2];
+                prev[0]=curr[0]=true;
+
+                for(int index=1;index<n;index++){
+                    for(int target=1;target<=sum/2;target++){
+                        //if index is not selected
+                        bool notTake = prev[target];
+
+                        //if the index is selected
+                        bool take = false;
+                        if(target>=nums[index]){
+                            take = prev[target-nums[index]];
+                        }
+
+                        curr[target] = take || notTake;
+                    }
+                    prev=curr;
+                }
+
+                return prev[sum/2];
         }
         return false;
     }
